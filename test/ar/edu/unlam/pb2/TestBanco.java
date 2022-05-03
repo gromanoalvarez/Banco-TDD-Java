@@ -33,6 +33,27 @@ public class TestBanco {
 	}
 	
 	@Test
+	public void queUnBancoRegistreElBalance() {
+		Banco galicia = new Banco("Galicia");
+		final Double BALANCE_ESPERADO = 8.8;
+		Cliente juan = galicia.nuevoCliente(BALANCE_ESPERADO);
+		
+		assertEquals(BALANCE_ESPERADO, galicia.balanceDeLaCuentaBancariaDelCliente(juan));
+	}
+
+	@Test
+	public void queUnBancoRegistreTransaccionesDelCliente() {
+		Banco galicia = new Banco("Galicia");
+		final Double DINERO_DE_NUEVA_CUENTA = 9000.0;
+		final Double DINERO_A_RETIRAR = 6000.0;
+		TipoDeTransaccion transaccionRetiro = TipoDeTransaccion.EXTRACCION_DINERO;
+		String mensajeEsperado = "Luego de esta transaccion le queda 3000.0 de dinero en total.";
+		Cliente juan = galicia.nuevoCliente(DINERO_DE_NUEVA_CUENTA);
+		
+		assertEquals(mensajeEsperado, galicia.transaccionesDelCliente(juan, transaccionRetiro, DINERO_A_RETIRAR));
+	}
+	
+	@Test
 	public void queUnBancoPuedaCrearCuentaSueldo() {
 		Banco galicia = new Banco("Galicia");
 		Cliente jose = galicia.nuevoCliente(350000.0);
@@ -121,26 +142,25 @@ public class TestBanco {
 	
 	
 	@Test
-	public void queUnBancoRegistreElBalance() {
+	public void queUnClientePuedaTenerMasDeUnaCuenta() {
 		Banco galicia = new Banco("Galicia");
-		final Double BALANCE_ESPERADO = 8.8;
-		Cliente juan = galicia.nuevoCliente(BALANCE_ESPERADO);
+		Cliente maria = galicia.nuevoCliente(100.0);
+		Cuenta primerCuenta = galicia.nuevaCuenta(TipoDeCuenta.CUENTA_CORRIENTE, maria);
+		Cuenta segundaCuenta = galicia.nuevaCuenta(TipoDeCuenta.CUENTA_SUELDO, maria);
+		Cuenta tercerCuenta = galicia.nuevaCuenta(TipoDeCuenta.CAJA_DE_AHORRO, maria);
+		final Integer CANTIDAD_DE_CUENTAS_ESPERADAS = 3;
 		
-		assertEquals(BALANCE_ESPERADO, galicia.balanceDeLaCuentaBancariaDelCliente(juan));
+		assertEquals(CANTIDAD_DE_CUENTAS_ESPERADAS, maria.cantidadDeCuentasDelCliente());
+
 	}
 
+	
 	@Test
-	public void queUnBancoRegistreTransaccionesDelCliente() {
+	public void queLosClientesConSumatoriaMayorAUnMillonSeanVIP() {
 		Banco galicia = new Banco("Galicia");
-		final Double DINERO_DE_NUEVA_CUENTA = 9000.0;
-		final Double DINERO_A_RETIRAR = 6000.0;
-		TipoDeTransaccion transaccionRetiro = TipoDeTransaccion.EXTRACCION_DINERO;
-		String mensajeEsperado = "Luego de esta transaccion le queda 3000.0 de dinero en total.";
-		Cliente juan = galicia.nuevoCliente(DINERO_DE_NUEVA_CUENTA);
+		Cliente german = galicia.nuevoCliente(1000000.1);
 		
-		assertEquals(mensajeEsperado, galicia.transaccionesDelCliente(juan, transaccionRetiro, DINERO_A_RETIRAR));
+		assertTrue(german.saberSiElClienteEsVip());
 	}
-	
-	
 	
 }

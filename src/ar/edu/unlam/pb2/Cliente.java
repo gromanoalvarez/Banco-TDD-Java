@@ -6,6 +6,8 @@ public class Cliente {
 	private Double dineroQueIngresa;
 	private Double dineroTotal;
 	private Cuenta cuentas[];
+	private Integer cantidadDeCuentasDelCliente;
+	private Boolean esVIP;
 	
 	public Cliente(Double dineroInicial) {
 		 this.dineroInicial=dineroInicial;
@@ -13,6 +15,8 @@ public class Cliente {
 		 this.dineroQueIngresa=0.0;
 		 this.dineroQueSale=0.0;
 		 cuentas = new Cuenta[5000];
+		 cantidadDeCuentasDelCliente=0;
+		 esVIP=false;
 	}
 
 	public Double getDineroInicial() {
@@ -50,7 +54,27 @@ public class Cliente {
 			dineroTotal-=monto;
 		}
 	}
-
 	
+	public void agregarCuentaAlCliente(Cuenta cuenta) {
+		for(Cuenta c: cuentas) {
+			if(c == null) {
+				c=cuenta;
+				cantidadDeCuentasDelCliente++;
+				break;
+			}
+		}
+	}
+
+	public Integer cantidadDeCuentasDelCliente() {
+		return cantidadDeCuentasDelCliente;
+	}
+	
+	public Boolean saberSiElClienteEsVip() {
+		if(dineroTotal>1000000) {
+			ListaVIP.agregarClienteVIP(this);
+			return true;
+		}
+		else return false;
+	}
 	
 }

@@ -12,12 +12,14 @@ import java.util.List;
  */
 public class ListaVIP {
 	
-	List<Cliente> clientesVIP = new LinkedList<>();
+	static List<Cliente> clientesVIP = new LinkedList<>();
 	
 	
-	public void agregarClienteVIP(Cliente cliente) {
+	public static void agregarClienteVIP(Cliente cliente) {
 		
 		clientesVIP.add(cliente); 
 	}
+	
+	
 
 }

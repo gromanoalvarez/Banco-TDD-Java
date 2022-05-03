@@ -12,11 +12,8 @@ import java.util.Arrays;
 public class Banco implements CuentaBancaria{
 	private String nombre;
 	private Cliente clientes[];
-	private Integer cantidadDeClientes;
 	private Cuenta cuentas[];
-
-	private int cantidadDeCuentas;
-
+	private Integer cantidadDeClientes, cantidadDeCuentas;
 
 	public Banco (String nombre) {
 		this.nombre=nombre;
@@ -44,8 +41,7 @@ public class Banco implements CuentaBancaria{
 
 	@Override
 	public String toString() {
-		return "Banco=" + nombre + ", clientes= " + clientes.length + ", cuentas= "
-				+ cuentas.length;
+		return "Banco=" + nombre + ", clientes= " + clientes.length + ", cuentas= "+ cuentas.length;
 	}
 	
 	public Cliente nuevoCliente(Double montoInicial) {
@@ -65,6 +61,7 @@ public class Banco implements CuentaBancaria{
 			for(Cuenta cuenta: cuentas) {
 				if(cuenta == null) {
 					cuenta = new CuentaSueldo(cliente);
+					cliente.agregarCuentaAlCliente(cuenta);
 					cantidadDeCuentas++;
 					return cuenta;
 				}
@@ -74,6 +71,7 @@ public class Banco implements CuentaBancaria{
 			for(Cuenta cuenta: cuentas) {
 				if(cuenta == null) {
 					cuenta = new CajaDeAhorro(cliente);
+					cliente.agregarCuentaAlCliente(cuenta);
 					cantidadDeCuentas++;
 					return cuenta;
 				}
@@ -83,6 +81,7 @@ public class Banco implements CuentaBancaria{
 			for(Cuenta cuenta: cuentas) {
 				if(cuenta == null) {
 					cuenta = new CuentaCorriente(cliente);
+					cliente.agregarCuentaAlCliente(cuenta);
 					cantidadDeCuentas++;
 					return cuenta;
 				}
